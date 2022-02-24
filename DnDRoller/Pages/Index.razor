@@ -1,9 +1,98 @@
-﻿@page "/"
+﻿@using System.ComponentModel.DataAnnotations;
+@page "/"
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h2>Stats</h2>
 
-Welcome to your new app.
+<div>
+	<span>
+		<span>Count:</span>
+		<span><input id="count" name="Count" type="number" @bind="@Count" class="col-md-1 input-lg" min=1/></span>
+	</span>
+</div>
+<div>
+	<span>
+		<span>Hit:</span>
+		<span><input id="hit" name="HitPlus" type="number" @bind="@HitPlus" class="col-md-1 input-lg" /></span>
+	</span>
+	<span>
+		<span>Damage:</span>
+		<input id="nd" name="Nd" type="number" @bind="@Nd" class="col-md-1 input-lg" />
+		<span>
+			<select @bind="@D" >
+				@foreach (var d in Enum.GetValues(typeof(Dice)))
+				{
+					<option value="@d"> @d </option>
+				}
+			</select> + 
+			<input id="dmg" name="DamagePlus" type="number" @bind="@DamagePlus" class="col-md-1"  />
+			</span>
+	</span>
+</div>
+<div>
+	<button @onclick=Throw>Throw</button>
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+	<h2>Results</h2>
+	@foreach (var res in Results)
+		{
+			<p>Hit: @res.Hit, Dmg: @res.Damage</p>
+		}
+</div>
+
+@code{
+	private int count = 1;
+    private int Count
+    {
+        get => count;
+        set => count = Math.Max(1, value);
+    }
+    private int nd = 1;
+    private int Nd
+    {
+        get => nd;
+        set => nd = Math.Max(1, value);
+    }
+	private int HitPlus = 0;
+	private int DamagePlus = 0;
+	private Dice D = Dice.d8;
+	private List<Result> Results = new List<Result>();
+
+	private void Throw()
+	{
+		Results.Clear();
+		for (var i = 0; i < Count; i++)
+		{
+			int hit = Random.Shared.Next(1, (int)Dice.d20 + 1);
+			int sum = 0;
+			for (var j = 0; j < Nd; j++)
+			{
+				sum += Random.Shared.Next(1, (int)D + 1);
+			}
+			Result r = new() {
+					Hit = hit + HitPlus,
+					Damage = sum + DamagePlus
+			};
+			Results.Add(r);
+		}
+		
+	}
+
+	enum Dice{
+		d4 = 4,
+		d6 = 6,
+		d8 = 8,
+		d10 = 10,
+		d12 = 12,
+		d20 = 20,
+		d100 = 100
+	}
+
+	struct Result
+	{
+		public int Hit;
+		public int Damage;
+	}
+}
