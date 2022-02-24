@@ -5,37 +5,41 @@
 
 <h2>Stats</h2>
 
-<div>
-	<span>
-		<span>Count:</span>
-		<span><input id="count" name="Count" type="number" @bind="@Count" class="col-md-1 input-lg" min=1/></span>
-	</span>
-	<span>
-		<span>Enemy AC:</span>
-		<span><input id="ac" name="AC" type="number" @bind="@AC" class="col-md-1 input-lg" min=1/></span>
-	</span>
+<div class="card bg-light mb-3">
+	<div class="card-body">
+		<span class="input-group mb-3">
+			<span class="input-group-text">Enemy AC:</span>
+			<input id="ac" name="AC" type="number" @bind="@AC" class="col-md-1 input-lg" min=1/>
+		</span>
+	</div>
+	
 </div>
-<div>
-	<span>
-		<span>Hit:</span>
-		<span><input id="hit" name="HitPlus" type="number" @bind="@HitPlus" class="col-md-1 input-lg" /></span>
-	</span>
-	<span>
-		<span>Damage:</span>
-		<input id="nd" name="Nd" type="number" @bind="@Nd" class="col-md-1 input-lg" />
-		<span>
-			<select @bind="@D" >
+<div class="card bg-light mb-3">
+	<div class="card-body">
+		<span class="input-group mb-3">
+			<span class="input-group-text">Count:</span>
+			<input id="count" name="Count" type="number" @bind="@Count" class="col-md-1 input-lg" min=1/>
+		</span>
+		<span class="input-group mb-3">
+			<span class="input-group-text">Hit:</span>
+			<input id="hit" name="HitPlus" type="number" @bind="@HitPlus" class="col-md-1 input-lg" />
+		</span>
+
+		<span class="input-group mb-3">
+			<span class="input-group-text">Damage:</span>
+			<input id="nd" name="Nd" type="number" @bind="@Nd" class="col-md-1 input-lg" />
+			<select @bind="@D" class="custom-select" >
 				@foreach (var d in Enum.GetValues(typeof(Dice)))
 				{
 					<option value="@d"> @d </option>
 				}
-			</select> + 
+			</select> <span class="input-group-text">+</span> 
 			<input id="dmg" name="DamagePlus" type="number" @bind="@DamagePlus" class="col-md-1"  />
-			</span>
-	</span>
+		</span>
+	</div>
 </div>
 <div>
-	<button @onclick=Throw>Throw</button>
+	<button class="btn btn-lg btn-outline-dark" @onclick=Throw>Throw</button>
 </div>
 
 <div>
