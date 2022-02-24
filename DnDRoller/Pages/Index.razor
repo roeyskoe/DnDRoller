@@ -10,6 +10,10 @@
 		<span>Count:</span>
 		<span><input id="count" name="Count" type="number" @bind="@Count" class="col-md-1 input-lg" min=1/></span>
 	</span>
+	<span>
+		<span>Enemy AC:</span>
+		<span><input id="ac" name="AC" type="number" @bind="@AC" class="col-md-1 input-lg" min=1/></span>
+	</span>
 </div>
 <div>
 	<span>
@@ -38,7 +42,8 @@
 	<h2>Results</h2>
 	@foreach (var res in Results)
 		{
-			<p>Hit: @res.Hit, Dmg: @res.Damage</p>
+		string col = @res.Hit >= AC ? "var(--bs-green)" : "var(--bs-red)";
+		<p style="color:@col">Hit: @res.Hit, Dmg: @res.Damage</p>
 		}
 </div>
 
@@ -49,12 +54,16 @@
         get => count;
         set => count = Math.Max(1, value);
     }
+
     private int nd = 1;
     private int Nd
     {
         get => nd;
         set => nd = Math.Max(1, value);
     }
+
+	private int AC = 10;
+
 	private int HitPlus = 0;
 	private int DamagePlus = 0;
 	private Dice D = Dice.d8;
