@@ -40,11 +40,11 @@
 
 <div>
 	<h2>Results</h2>
-	@foreach (var res in Results)
-		{
-		string col = @res.Hit >= AC ? "var(--bs-green)" : "var(--bs-red)";
-		<p style="color:@col">Hit: @res.Hit, Dmg: @res.Damage</p>
-		}
+	@for(int i = 0; i < Results.Count;  i++)
+	{
+		string col = @Results[i].Hit >= AC ? "var(--bs-green)" : "var(--bs-red)";
+		<Result Title="@i" Damage=@Results[i].Damage Hit=@Results[i].Hit Color=@col></Result>
+	}
 </div>
 
 @code{

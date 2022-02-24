@@ -1,0 +1,22 @@
+﻿<div class="card bg-light mb-3" style="color:@Color; max-width:8em">
+	<div class="card-header">@Title</div>
+	<div class="card-body">
+		
+		<p class="card-text">Hit: @Hit</p>
+		<p class="card-text">Dmg: @Damage</p>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+    public int Title { get; set; }
+
+	[Parameter]
+    public int Hit { get; set; }
+
+	[Parameter]
+    public int Damage { get; set; }
+
+	[Parameter]
+    public string? Color { get; set; }
+}
