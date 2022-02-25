@@ -1,5 +1,12 @@
-﻿<div class="card bg-light mb-3" style="color:@Color; max-width:8em">
-	<div class="card-header">@Title</div>
+﻿<div class="card bg-light m-1" style="color:@Color; width:6em">
+	<div class="card-header">
+		<span class="float-left">@Title</span>
+		@if (Crit?? true)
+		{
+			<span class="float-right">🌟</span>
+		}
+		
+	</div>
 	<div class="card-body">
 		
 		<p class="card-text">Hit: @Hit</p>
@@ -19,4 +26,7 @@
 
 	[Parameter]
     public string? Color { get; set; }
+
+	[Parameter]
+    public bool? Crit { get; set; }
 }
