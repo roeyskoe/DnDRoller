@@ -1,7 +1,8 @@
-﻿<div class="card bg-light m-1" style="color:@Color; width:6em">
+﻿@using System.ComponentModel.DataAnnotations
+<div class="card bg-light m-1" style="color:@Color; width:6em">
 	<div class="card-header">
 		<span class="float-left">@Title</span>
-		@if (Crit?? true)
+		@if (ThrowResult.Crit)
 		{
 			<span class="float-right">🌟</span>
 		}
@@ -9,24 +10,24 @@
 	</div>
 	<div class="card-body">
 		
-		<p class="card-text">Hit: @Hit</p>
-		<p class="card-text">Dmg: @Damage</p>
+		<p class="card-text">Hit: @ThrowResult.Hit</p>
+		<p class="card-text">Dmg: @ThrowResult.Damage</p>
 	</div>
 </div>
 
 @code {
+
+	[Parameter]
+	[Required]
+	public ThrowResult ThrowResult { get; set; } = null!;
+
 	[Parameter]
     public int Title { get; set; }
 
-	[Parameter]
-    public int Hit { get; set; }
+    private string Color { get; set; } = null!;
 
-	[Parameter]
-    public int Damage { get; set; }
-
-	[Parameter]
-    public string? Color { get; set; }
-
-	[Parameter]
-    public bool? Crit { get; set; }
+	protected override void OnParametersSet()
+    {
+        Color = ThrowResult.Succeeded ? "var(--bs-green)" : "var(--bs-red)";
+    }
 }
