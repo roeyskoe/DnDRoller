@@ -1,0 +1,76 @@
+﻿<div class="card bg-light mb-3">
+	<div class="card-body">
+		<span class="input-group mb-3">
+			<span class="input-group-text">Enemy AC:</span>
+			<input id="ac" name="AC" type="number" @bind="@Group.AC" class="col-md-1 input-lg" min=1/>
+		</span>
+	</div>
+</div>
+<div class="card bg-light mb-3">
+	<div class="card-body">
+		<span class="input-group mb-3">
+			<span class="input-group-text">Count:</span>
+			<input id="count" name="Count" type="number" @bind="@Group.Count" class="col-md-1 input-lg" min=1/>
+		</span>
+		<span class="input-group mb-3">
+			<span class="input-group-text">Hit:</span>
+			<input id="hit" name="HitPlus" type="number" @bind="@Group.HitPlus" class="col-md-1 input-lg" />
+		</span>
+
+		<span class="input-group mb-3">
+			<span class="input-group-text">Damage:</span>
+			<input id="nd" name="Nd" type="number" @bind="@Group.Nd" class="col-md-1 input-lg" />
+			<select @bind="@Group.D" class="custom-select" >
+				@foreach (var d in Enum.GetValues(typeof(Dice)))
+				{
+					<option value="@d"> @d </option>
+				}
+			</select> <span class="input-group-text">+</span> 
+			<input id="dmg" name="DamagePlus" type="number" @bind="@Group.DamagePlus" class="col-md-1"  />
+		</span>
+	</div>
+</div>
+<div>
+	<button class="btn btn-lg btn-outline-dark" @onclick=Throw>Throw</button>
+</div>
+
+<div>
+	<h2>Results</h2>
+	<div class="d-flex flex-wrap">
+		@for(int i = 0; i < Group.Results.Count;  i++)
+		{
+			<Result Title="@i" ThrowResult=@Group.Results[i]></Result>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Group Group { get; set; } = null!;
+
+	private void Throw()
+	{
+		Group.Results.Clear();
+		for (var i = 0; i < Group.Count; i++)
+		{
+			int hit = Random.Shared.Next(1, (int)Dice.d20 + 1);
+			bool crit = hit == 20 ? true : false;
+			int sum = 0;
+			// On a nat20, roll 2x dices.
+			int diceToRoll = crit ? 2 * Group.Nd : Group.Nd;
+			for (var j = 0; j < diceToRoll; j++)
+			{
+				sum += Random.Shared.Next(1, (int)Group.D + 1);
+			}
+			
+			int hitTotal = hit + Group.HitPlus;
+			ThrowResult r = new() {
+					Crit = crit,
+					Hit = hitTotal,
+					Succeeded = crit || (hitTotal > Group.AC),
+					Damage = sum + Group.DamagePlus
+			};
+			Group.Results.Add(r);
+		}
+	}
+}
