@@ -40,7 +40,7 @@
     <div class="d-flex flex-wrap">
         @for(int i = 0; i < Group.Results.Count;  i++)
         {
-            <Result Title="@i" ThrowResult=@Group.Results[i]></Result>
+            <Result @ref=res Title="@i" ThrowResult=@Group.Results[i] Delay=@(i*300)></Result>
         }
     </div>
 </div>
@@ -49,8 +49,16 @@
     [Parameter]
     public Group Group { get; set; } = null!;
 
+    private List<Result> Results = new List<Result>();
+
+    private Result res
+    {
+        set => Results.Add(value);
+    }
+
     private void Throw()
     {
+        Results.ForEach(r => r.ShouldShow = false);
         Group.Results.Clear();
         for (var i = 0; i < Group.Count; i++)
         {

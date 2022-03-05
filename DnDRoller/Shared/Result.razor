@@ -1,5 +1,6 @@
 ﻿@using System.ComponentModel.DataAnnotations
-<div class="card bg-light m-1" style="color:@Color; width:6em">
+
+<div class="card bg-light m-1 fade @(ShouldShow?"show":"")" style="color:@Color; width:6em">
     <div class="card-header">
         <span class="float-left">@Title</span>
         @if (ThrowResult.Crit)
@@ -24,10 +25,21 @@
     [Parameter]
     public int Title { get; set; }
 
+    [Parameter]
+    public int Delay { get; set; }
+
     private string Color { get; set; } = null!;
 
     protected override void OnParametersSet()
     {
         Color = ThrowResult.Succeeded ? "var(--bs-green)" : "var(--bs-red)";
+        Task.Run(async delegate
+              {
+                  await Task.Delay(Delay);
+                  ShouldShow = true;
+                  StateHasChanged();
+              });
     }
+
+    public bool ShouldShow { get; set; }
 }
