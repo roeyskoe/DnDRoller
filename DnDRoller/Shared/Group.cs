@@ -2,6 +2,18 @@
 {
     public class Group
     {
+
+        public Action<Group> Destroyer;
+
+        public Group(Action<Group> destroyer)
+        {
+            Destroyer = destroyer;
+        }
+
+        public void Destroy()
+        {
+            Destroyer.Invoke(this);
+        }
         private int count = 1;
         public int Count
         {

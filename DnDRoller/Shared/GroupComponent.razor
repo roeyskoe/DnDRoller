@@ -3,6 +3,7 @@
         <span class="input-group mb-3">
             <span class="input-group-text">Enemy AC:</span>
             <input id="ac" name="AC" type="number" @bind="@Group.AC" class="col-md-1 input-lg" min=1/>
+            <span class="ms-auto"><button type="button" class="btn-close" aria-label="Close" @onclick=Close></button></span>
         </span>
     </div>
 </div>
@@ -62,7 +63,7 @@
             {
                 sum += Random.Shared.Next(1, (int)Group.D + 1);
             }
-            
+
             int hitTotal = hit + Group.HitPlus;
             ThrowResult r = new() {
                     Crit = crit,
@@ -72,5 +73,10 @@
             };
             Group.Results.Add(r);
         }
+    }
+
+    private void Close()
+    {
+        Group.Destroy();
     }
 }

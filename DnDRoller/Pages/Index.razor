@@ -5,10 +5,7 @@
 
 <div class="card bg-light mb-3">
     <div class="card-body">
-        <span class="input-group mb-3">
-            <span class="input-group-text">Number of groups:</span>
-            <input id="groups" name="Groups" type="number" @bind="NGroups" @bind:event="oninput" class="col-md-1 input-lg" min=1/>
-        </span>
+        <button class="btn btn-lg btn-outline-dark" @onclick=NewGroup>New group</button>
     </div>
 </div>
 
@@ -29,14 +26,30 @@
     private int NGroups
     {
         get => ngroups;
-        set { ngroups = Math.Max(1, value); if(ngroups > Groups.Count) Groups.Add(new Group()); if (ngroups < Groups.Count) Groups.Remove(Groups[^1]); }
+        set
+        {
+            ngroups = value;
+            Groups.Add(new Group(DestroyGroup));
+        }
     }
 
     private List<Group> Groups = new List<Group>();
 
+    private void NewGroup()
+    {
+        NGroups++;
+    }
+
+    private void DestroyGroup(Group group)
+    {
+        var test = Groups.Remove(group);
+        ngroups--;
+        StateHasChanged();
+    }
+
     protected override void OnInitialized()
     {
-        Groups.Add(new Group());
+        Groups.Add(new Group(DestroyGroup));
         base.OnInitialized();
     }
 }
