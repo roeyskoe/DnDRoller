@@ -1,32 +1,32 @@
 ﻿@using System.ComponentModel.DataAnnotations
 <div class="card bg-light m-1" style="color:@Color; width:6em">
-	<div class="card-header">
-		<span class="float-left">@Title</span>
-		@if (ThrowResult.Crit)
-		{
-			<span class="float-right">🌟</span>
-		}
-		
-	</div>
-	<div class="card-body">
-		
-		<p class="card-text">Hit: @ThrowResult.Hit</p>
-		<p class="card-text">Dmg: @ThrowResult.Damage</p>
-	</div>
+    <div class="card-header">
+        <span class="float-left">@Title</span>
+        @if (ThrowResult.Crit)
+        {
+            <span class="float-right">🌟</span>
+        }
+        
+    </div>
+    <div class="card-body">
+        
+        <p class="card-text">Hit: @ThrowResult.Hit</p>
+        <p class="card-text">Dmg: @ThrowResult.Damage</p>
+    </div>
 </div>
 
 @code {
 
-	[Parameter]
-	[Required]
-	public ThrowResult ThrowResult { get; set; } = null!;
+    [Parameter]
+    [Required]
+    public ThrowResult ThrowResult { get; set; } = null!;
 
-	[Parameter]
+    [Parameter]
     public int Title { get; set; }
 
     private string Color { get; set; } = null!;
 
-	protected override void OnParametersSet()
+    protected override void OnParametersSet()
     {
         Color = ThrowResult.Succeeded ? "var(--bs-green)" : "var(--bs-red)";
     }

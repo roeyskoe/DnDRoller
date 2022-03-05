@@ -4,39 +4,39 @@
 <PageTitle>Index</PageTitle>
 
 <div class="card bg-light mb-3">
-	<div class="card-body">
-		<span class="input-group mb-3">
-			<span class="input-group-text">Number of groups:</span>
-			<input id="groups" name="Groups" type="number" @bind="NGroups" @bind:event="oninput" class="col-md-1 input-lg" min=1/>
-		</span>
-	</div>
+    <div class="card-body">
+        <span class="input-group mb-3">
+            <span class="input-group-text">Number of groups:</span>
+            <input id="groups" name="Groups" type="number" @bind="NGroups" @bind:event="oninput" class="col-md-1 input-lg" min=1/>
+        </span>
+    </div>
 </div>
 
 <div>
-	<div class="d-flex flex-wrap">
-		@for(int i = 0; i < Groups.Count;  i++)
-		{
-			<div class="card bg-light mb-3 p-1 m-2">
-				<GroupComponent Group=@Groups[i]></GroupComponent>
-			</div>
-		}
-	</div>
+    <div class="d-flex flex-wrap">
+        @for(int i = 0; i < Groups.Count;  i++)
+        {
+            <div class="card bg-light mb-3 p-1 m-2">
+                <GroupComponent Group=@Groups[i]></GroupComponent>
+            </div>
+        }
+    </div>
 </div>
 
 @code{
 
-	private int ngroups = 1;
-	private int NGroups
-	{
-		get => ngroups;
-		set { ngroups = Math.Max(1, value); if(ngroups > Groups.Count) Groups.Add(new Group()); if (ngroups < Groups.Count) Groups.Remove(Groups[^1]); }
-	}
+    private int ngroups = 1;
+    private int NGroups
+    {
+        get => ngroups;
+        set { ngroups = Math.Max(1, value); if(ngroups > Groups.Count) Groups.Add(new Group()); if (ngroups < Groups.Count) Groups.Remove(Groups[^1]); }
+    }
 
-	private List<Group> Groups = new List<Group>();
+    private List<Group> Groups = new List<Group>();
 
-	protected override void OnInitialized()
-	{
-		Groups.Add(new Group());
-		base.OnInitialized();
-	}
+    protected override void OnInitialized()
+    {
+        Groups.Add(new Group());
+        base.OnInitialized();
+    }
 }
