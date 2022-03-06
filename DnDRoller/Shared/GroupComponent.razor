@@ -2,7 +2,7 @@
     <div class="card-body">
         <span class="input-group mb-3">
             <span class="input-group-text">Enemy AC:</span>
-            <input id="ac" name="AC" type="number" @bind="@Group.AC" class="col-md-1 input-lg" min=1/>
+            <input id="ac" name="AC" type="number" @bind="@Group.AC" class="col-md-2 input-lg" min=1/>
             <span class="ms-auto"><button type="button" class="btn-close" aria-label="Close" @onclick=Close></button></span>
         </span>
     </div>
@@ -11,23 +11,23 @@
     <div class="card-body">
         <span class="input-group mb-3">
             <span class="input-group-text">Count:</span>
-            <input id="count" name="Count" type="number" @bind="@Group.Count" class="col-md-1 input-lg" min=1/>
+            <input id="count" name="Count" type="number" @bind="@Group.Count" class="col-md-2 input-lg" min=1/>
         </span>
         <span class="input-group mb-3">
             <span class="input-group-text">Hit:</span>
-            <input id="hit" name="HitPlus" type="number" @bind="@Group.HitPlus" class="col-md-1 input-lg" />
+            <input id="hit" name="HitPlus" type="number" @bind="@Group.HitPlus" class="col-md-2 input-lg" />
         </span>
 
         <span class="input-group mb-3">
             <span class="input-group-text">Damage:</span>
-            <input id="nd" name="Nd" type="number" @bind="@Group.Nd" class="col-md-1 input-lg" />
+            <input id="nd" name="Nd" type="number" @bind="@Group.Nd" class="col-md-2 input-lg" />
             <select @bind="@Group.D" class="custom-select" >
                 @foreach (var d in Enum.GetValues(typeof(Dice)))
                 {
                     <option value="@d"> @d </option>
                 }
             </select> <span class="input-group-text">+</span> 
-            <input id="dmg" name="DamagePlus" type="number" @bind="@Group.DamagePlus" class="col-md-1"  />
+            <input id="dmg" name="DamagePlus" type="number" @bind="@Group.DamagePlus" class="col-md-2"  />
         </span>
     </div>
 </div>
