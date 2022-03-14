@@ -56,7 +56,7 @@
         set => Results.Add(value);
     }
 
-    private void Throw()
+    public void Throw()
     {
         Results.ForEach(r => r.ShouldShow = false);
         Group.Results.Clear();

@@ -14,13 +14,21 @@
         @for(int i = 0; i < Groups.Count;  i++)
         {
             <div class="card bg-light mb-3 p-1 m-2" style="max-width: 28.25rem">
-                <GroupComponent Group=@Groups[i]></GroupComponent>
+                <GroupComponent @ref="GroupComponent" Group=@Groups[i]></GroupComponent>
             </div>
         }
     </div>
 </div>
 
+<div class="card bg-light mb-1" style="width: fit-content">
+    <div class="card-body">
+        <button class="btn btn-lg btn-outline-dark" @onclick=ThrowAll>Throw All</button>
+    </div>
+</div>
+
 @code{
+    private List<Group> Groups = new List<Group>();
+    private List<GroupComponent> GroupComponents = new List<GroupComponent>();
 
     private int ngroups = 1;
     private int NGroups
@@ -33,7 +41,21 @@
         }
     }
 
-    private List<Group> Groups = new List<Group>();
+    private GroupComponent GroupComponent
+    {
+        set
+        {
+            GroupComponents.Add(value);
+        }
+    }
+
+    private void ThrowAll()
+    {
+        foreach (var groupc in GroupComponents)
+        {
+            groupc.Throw();
+        }
+    }
 
     private void NewGroup()
     {
