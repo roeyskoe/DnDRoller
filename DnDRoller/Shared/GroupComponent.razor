@@ -43,12 +43,15 @@
             <Result @ref=res Title="@i" ThrowResult=@Group.Results[i] Delay=@(i*300)></Result>
         }
     </div>
+    <p>Total: @Total</p>
 </div>
 
 @code {
     [Parameter]
     public Group Group { get; set; } = null!;
 
+    private int Total;
+    
     private List<Result> Results = new List<Result>();
 
     private Result res
@@ -60,6 +63,7 @@
     {
         Results.ForEach(r => r.ShouldShow = false);
         Group.Results.Clear();
+        Total = 0;
         for (var i = 0; i < Group.Count; i++)
         {
             int hit = Random.Shared.Next(1, (int)Dice.d20 + 1);
@@ -79,6 +83,7 @@
                     Succeeded = crit || (hitTotal > Group.AC),
                     Damage = sum + Group.DamagePlus
             };
+            Total += r.Succeeded ? r.Damage : 0;
             Group.Results.Add(r);
         }
     }
