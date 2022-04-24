@@ -80,7 +80,7 @@
             ThrowResult r = new() {
                     Crit = crit,
                     Hit = hitTotal,
-                    Succeeded = crit || (hitTotal > Group.AC),
+                    Succeeded = crit || (hitTotal >= Group.AC),
                     Damage = sum + Group.DamagePlus
             };
             Total += r.Succeeded ? r.Damage : 0;
