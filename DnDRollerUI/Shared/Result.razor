@@ -10,7 +10,10 @@
         
     </div>
     <div class="card-body" style="padding: 0.5em">
-        <p class="card-text mb-0">Hit: @ThrowResult.Hit</p>
+        @if (ThrowResult.SaveLimit == 0)
+        {
+            <p class="card-text mb-0">Hit: @ThrowResult.Hit</p>
+        }
         <p class="card-text mb-0">Dmg: @ThrowResult.Damage</p>
     </div>
 </div>

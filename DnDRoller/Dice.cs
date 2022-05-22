@@ -1,4 +1,4 @@
-﻿namespace DnDRoller.Shared
+﻿namespace DnDRoller
 {
     public enum Dice
     {

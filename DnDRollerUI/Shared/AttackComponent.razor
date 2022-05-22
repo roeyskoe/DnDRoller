@@ -1,0 +1,51 @@
+<span class="input-group mb-3">
+    <span class="input-group-text">Damage:</span>
+    <input id="nd" name="Nd" type="number" @bind="@Attack.NDice" class="col-md-2 input-lg"/>
+    <select @bind="@Attack.Dice" class="custom-select">
+        @foreach (var d in Enum.GetValues(typeof(Dice)))
+        {
+            <option value="@d"> @d </option>
+        }
+    </select> <span class="input-group-text">+</span>
+    <input id="dmg" name="DamagePlus" type="number" @bind="@Attack.Plus" class="col-md-2"/>
+    @if (Attack is AOEAttack aoe)
+    {
+        <select @bind="@aoe.Save" class="custom-select">
+            @foreach (var d in Enum.GetValues(typeof(Save)))
+            {
+                <option value="@d"> @d </option>
+            }
+        </select>
+        <input id="saveLimit" name="SaveLimit" type="number" @bind="@aoe.SaveLimit" class="col-md-2"/>
+    }
+    
+    <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Attack" @onclick=DoAttack>Throw</button>
+
+    <span class="ms-auto">
+        <button type="button" class="btn-close btn-sm" aria-label="Close" @onclick=DoRemove></button>
+    </span>
+</span>
+
+
+@code {
+
+    [Parameter]
+    public Attack Attack { get; set; }
+
+    [Parameter]
+    public Action<Attack> AttackFunc { get; set; }
+
+    [Parameter]
+    public Action<AttackComponent> RemoveFunc { get; set; }
+
+    private void DoAttack()
+    {
+        AttackFunc(Attack);
+    }
+
+    private void DoRemove()
+    {
+        RemoveFunc(this);
+    }
+
+}

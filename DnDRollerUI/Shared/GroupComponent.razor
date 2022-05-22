@@ -1,0 +1,99 @@
+﻿<div class="card bg-light mb-3">
+    <div class="card-body">
+        <span class="input-group mb-3">
+            <span class="input-group-text">Enemy AC:</span>
+            <input id="ac" name="AC" type="number" @bind="@AC" class="col-md-2 input-lg" min=1/>
+            <span class="input-group-text">Count:</span>
+            <input id="count" name="Count" type="number" @bind="@N" class="col-md-2 input-lg" min=1/>
+            <span class="ms-auto">
+                <button type="button" class="btn-close" aria-label="Close" @onclick=Close></button>
+            </span>
+        </span>
+    </div>
+</div>
+<div class="card bg-light mb-3">
+    <div class="card-body">
+        <div class="d-flex flex-wrap">
+            @foreach (var a in Group.Attacks)
+            {
+                <AttackComponent Attack=@a AttackFunc=Throw RemoveFunc=RemoveAttack></AttackComponent>
+            }
+        </div>
+        <div class="dropdown">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                New Attack
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#" @onclick=NewDirectAttack>Direct</a>
+                <a class="dropdown-item" href="#" @onclick=NewAoeAttack>AOE</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h2>Results</h2>
+    <div class="d-flex flex-wrap">
+        @for (int i = 0; i < Results.Count; i++)
+        {
+            <Result @ref="res" Title="@i" ThrowResult=@Results[i] Delay=@(i * 300)></Result>
+        }
+    </div>
+    <p>Total: @Total</p>
+</div>
+
+@code {
+
+    [Parameter]
+    public Group Group { get; set; } = null!;
+
+    List<Result> ResultComponents = new List<Result>();
+    private Result res
+    {
+        set => ResultComponents.Add(value);
+    }
+
+    private int AC { get; set; }
+
+    private int N
+    {
+        get => Group.Monsters.Count;
+        set => _ = value;
+    }
+
+    private int Total;
+
+    private List<ThrowResult> Results = new List<ThrowResult>();
+
+    public void Throw(Attack at)
+    {
+        foreach (var resultComponent in ResultComponents)
+        {
+            resultComponent.ShouldShow = false;
+        }
+        Results = Group.Attack(10, at);
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+    //Group.Destroy();
+    }
+
+    private void NewDirectAttack()
+    {
+        Group.Attacks.Add(new DirectAttack(Dice.d4, 1, 0, 0));
+    }
+
+    private void NewAoeAttack()
+    {
+        Group.Attacks.Add(new AOEAttack(Dice.d4, 1, 0, Save.Dexterity, 11));
+    }
+
+    private void RemoveAttack(AttackComponent atc)
+    {
+        Group.Attacks.Remove(atc.Attack);
+        StateHasChanged();
+    }
+
+}

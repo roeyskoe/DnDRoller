@@ -30,17 +30,6 @@
     private List<Group> Groups = new List<Group>();
     private List<GroupComponent> GroupComponents = new List<GroupComponent>();
 
-    private int ngroups = 1;
-    private int NGroups
-    {
-        get => ngroups;
-        set
-        {
-            ngroups = value;
-            Groups.Add(new Group(DestroyGroup));
-        }
-    }
-
     private GroupComponent GroupComponent
     {
         set
@@ -53,25 +42,26 @@
     {
         foreach (var groupc in GroupComponents)
         {
-            groupc.Throw();
+            //groupc.Throw();
         }
     }
 
     private void NewGroup()
     {
-        NGroups++;
+        Groups.Add(new Group());
     }
 
     private void DestroyGroup(Group group)
     {
         var test = Groups.Remove(group);
-        ngroups--;
         StateHasChanged();
     }
 
     protected override void OnInitialized()
     {
-        Groups.Add(new Group(DestroyGroup));
+        List<Attack> attacks = new List<Attack>();
+        attacks.Add(new DirectAttack(Dice.d8, 4, 2, 10));
+        Groups.Add(new Group(5, attacks));
         base.OnInitialized();
     }
 }

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnDRoller", "DnDRoller\DnDRoller.csproj", "{31BC06A4-069A-4046-AD9A-8417FD369E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnDRollerUI", "DnDRollerUI\DnDRollerUI.csproj", "{31BC06A4-069A-4046-AD9A-8417FD369E53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnDRoller", "DnDRoller\DnDRoller.csproj", "{8CD71CB5-B8FB-45F3-BC0F-D7AB63F1D40A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleRoller", "ConsoleRoller\ConsoleRoller.csproj", "{7C73AB89-8E2C-4CB9-9D5B-1A510DBA4BCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{31BC06A4-069A-4046-AD9A-8417FD369E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31BC06A4-069A-4046-AD9A-8417FD369E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31BC06A4-069A-4046-AD9A-8417FD369E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD71CB5-B8FB-45F3-BC0F-D7AB63F1D40A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD71CB5-B8FB-45F3-BC0F-D7AB63F1D40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD71CB5-B8FB-45F3-BC0F-D7AB63F1D40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD71CB5-B8FB-45F3-BC0F-D7AB63F1D40A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C73AB89-8E2C-4CB9-9D5B-1A510DBA4BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C73AB89-8E2C-4CB9-9D5B-1A510DBA4BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C73AB89-8E2C-4CB9-9D5B-1A510DBA4BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C73AB89-8E2C-4CB9-9D5B-1A510DBA4BCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
