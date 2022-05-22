@@ -17,7 +17,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish DnDRoller/DnDRollerUI.csproj -c Release -o release --nologo
+      run: dotnet publish DnDRollerUI/DnDRollerUI.csproj -c Release -o release --nologo
     - name: Change base-tag in index.html from / to DnDRoller
       run: sed -i 's/<base href="\/" \/>/<base href="\/DnDRollerUI\/" \/>/g' release/wwwroot/index.html
     - name: copy index.html to 404.html
