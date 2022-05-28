@@ -11,11 +11,9 @@
 
 <div>
     <div class="d-flex flex-wrap">
-        @for(int i = 0; i < Groups.Count;  i++)
+        @for (int i = 0; i < Groups.Count; i++)
         {
-            <div class="card bg-light mb-3 p-1 m-2" style="max-width: 28.25rem">
-                <GroupComponent @ref="GroupComponent" Group=@Groups[i]></GroupComponent>
-            </div>
+            <GroupComponent @ref="GroupComponent" Group=@Groups[i]></GroupComponent>
         }
     </div>
 </div>
@@ -32,17 +30,14 @@
 
     private GroupComponent GroupComponent
     {
-        set
-        {
-            GroupComponents.Add(value);
-        }
+        set { GroupComponents.Add(value); }
     }
 
     private void ThrowAll()
     {
         foreach (var groupc in GroupComponents)
         {
-            //groupc.Throw();
+    //groupc.Throw();
         }
     }
 
@@ -60,8 +55,9 @@
     protected override void OnInitialized()
     {
         List<Attack> attacks = new List<Attack>();
-        attacks.Add(new DirectAttack(Dice.d8, 4, 2, 10));
+        attacks.Add(new DirectAttack(Dice.d8, 4, 2, 2, "Hit"));
         Groups.Add(new Group(5, attacks));
         base.OnInitialized();
     }
+
 }

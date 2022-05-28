@@ -1,0 +1,48 @@
+<div class="card bg-light m-1" style="width:10em">
+    <div class="card-header">
+        <div class="progress" style="width: 100%; height: 0.5rem;">
+            <div class="progress-bar" role="progressbar" aria-valuenow="@Monster.Hp" aria-valuemin="0" aria-valuemax="@Monster.MaxHp" style=" width: @HPprs%;  background-color: hsl(calc(@HPprs * 1.2), 100%, 35%);"></div>
+        </div>
+        <div class="input-group form-outline">
+
+            <input type="number" class="form-control" style="padding-right: 0" @bind="Monster.Hp">
+            <span class="input-group-text">/@Monster.MaxHp</span>
+        </div>
+    </div>
+    <div class="card-body" style="padding: 0.5em">
+        @foreach (var attack in Monster.Attacks)
+        {
+            <Button type="button" class="btn btn-secondary" @onclick="() => Throw(attack)">@attack.Name</Button>
+        }
+        @if (Result != null)
+        {
+            <ResultComponent ThrowResult=Result Title=@LastAttack.Name></ResultComponent>
+        }
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public Monster Monster { get; set; }
+
+    private double HPprs
+    {
+        get => Monster.Hp * 1.0 / Monster.MaxHp * 100;
+    }
+
+    [Parameter]
+    public int TargetAC { get; set; }
+
+    private Attack LastAttack { get; set; }
+
+    private ThrowResult Result { get; set; }
+
+    public void Throw(Attack attack)
+    {
+        LastAttack = attack;
+        Result = attack.Throw(TargetAC);
+        StateHasChanged();
+    }
+
+}

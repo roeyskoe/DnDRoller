@@ -1,45 +1,49 @@
-﻿<div class="card bg-light mb-3">
-    <div class="card-body">
-        <span class="input-group mb-3">
-            <span class="input-group-text">Enemy AC:</span>
-            <input id="ac" name="AC" type="number" @bind="@AC" class="col-md-2 input-lg" min=1/>
-            <span class="input-group-text">Count:</span>
-            <input id="count" name="Count" type="number" @bind="@N" class="col-md-2 input-lg" min=1/>
-            <span class="ms-auto">
-                <button type="button" class="btn-close" aria-label="Close" @onclick=Close></button>
-            </span>
-        </span>
-    </div>
-</div>
-<div class="card bg-light mb-3">
-    <div class="card-body">
-        <div class="d-flex flex-wrap">
-            @foreach (var a in Group.Attacks)
-            {
-                <AttackComponent Attack=@a AttackFunc=Throw RemoveFunc=RemoveAttack></AttackComponent>
-            }
+﻿<div class="card bg-light mb-3 p-1 m-2 d-flex flex-row bd-highlight">
+    <div class="card bg-light mb-3 p-2" style="max-width: 27rem">
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <span class="input-group mb-3">
+                    <span class="input-group-text">Enemy AC:</span>
+                    <input id="ac" name="AC" type="number" @bind="@AC" class="col-md-2 input-lg" min=1/>
+                    <span class="input-group-text">Count:</span>
+                    <input id="count" name="Count" type="number" @bind="@N" class="col-md-2 input-lg" min=1/>
+                    <span class="input-group-text">Max HP:</span>
+                    <input id="maxHp" name="MaxHP" type="number" @bind="@MaxHp" class="col-md-2 input-lg" min=1/>
+                    <span class="ms-auto">
+                        <button type="button" class="btn-close" aria-label="Close" @onclick=Close></button>
+                    </span>
+                </span>
+            </div>
         </div>
-        <div class="dropdown">
-            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                New Attack
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#" @onclick=NewDirectAttack>Direct</a>
-                <a class="dropdown-item" href="#" @onclick=NewAoeAttack>AOE</a>
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+                <div class="d-flex flex-wrap">
+                    @foreach (var a in Group.Attacks)
+                    {
+                        <AttackComponent Attack=@a AttackFunc=Throw RemoveFunc=RemoveAttack></AttackComponent>
+                    }
+                </div>
+                <div class="dropdown">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        New Attack
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="#" @onclick=NewDirectAttack>Direct</a>
+                        <a class="dropdown-item" href="#" @onclick=NewAoeAttack>AOE</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<div>
-    <h2>Results</h2>
-    <div class="d-flex flex-wrap">
-        @for (int i = 0; i < Results.Count; i++)
-        {
-            <Result @ref="res" Title="@i" ThrowResult=@Results[i] Delay=@(i * 300)></Result>
-        }
+    <div class="p-2">
+        <div class="d-flex flex-wrap">
+            @for (int i = 0; i < Group.Monsters.Count; i++)
+            {
+                <MonsterComponent @ref="mons" Monster=@Group.Monsters[i] TargetAC=@AC></MonsterComponent>
+            }
+        </div>
+        <p>Total: @Total</p>
     </div>
-    <p>Total: @Total</p>
 </div>
 
 @code {
@@ -47,10 +51,11 @@
     [Parameter]
     public Group Group { get; set; } = null!;
 
-    List<Result> ResultComponents = new List<Result>();
-    private Result res
+    private List<MonsterComponent> MonsterComponents = new List<MonsterComponent>();
+
+    private MonsterComponent mons
     {
-        set => ResultComponents.Add(value);
+        set => MonsterComponents.Add(value);
     }
 
     private int AC { get; set; }
@@ -58,7 +63,23 @@
     private int N
     {
         get => Group.Monsters.Count;
-        set => _ = value;
+        set
+        {
+            if (N > value) Group.Monsters.RemoveAt(Group.Monsters.Count - 1);
+            if (N < value) Group.Monsters.Add(new Monster() {Attacks = Group.Attacks});
+        }
+    }
+
+    private int MaxHp
+    {
+        get => Group.Monsters[0].MaxHp;
+        set
+        {
+            foreach (var monster in Group.Monsters)
+            {
+                monster.MaxHp = value;
+            }
+        }
     }
 
     private int Total;
@@ -67,12 +88,10 @@
 
     public void Throw(Attack at)
     {
-        foreach (var resultComponent in ResultComponents)
+        foreach (var monsterComponent in MonsterComponents)
         {
-            resultComponent.ShouldShow = false;
+            monsterComponent.Throw(at);
         }
-        Results = Group.Attack(10, at);
-        StateHasChanged();
     }
 
     private void Close()
@@ -94,6 +113,12 @@
     {
         Group.Attacks.Remove(atc.Attack);
         StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        Helper.OnUpdate += StateHasChanged;
+        base.OnInitialized();
     }
 
 }

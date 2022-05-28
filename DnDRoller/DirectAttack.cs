@@ -5,12 +5,13 @@ namespace DnDRoller;
 public class DirectAttack : Attack
 {
     public int ToHitPlus { get; set; }
-    public DirectAttack(Dice d, int n, int plus, int toHit)
+    public DirectAttack(Dice d, int n, int plus, int toHit, string name = "")
     {
         Dice = d;
         NDice = n;
         Plus = plus;
         ToHitPlus = toHit;
+        Name = name;
     }
     
     public override ThrowResult Throw(int targetAc = 0)

@@ -25,10 +25,7 @@
     public ThrowResult ThrowResult { get; set; } = null!;
 
     [Parameter]
-    public int Title { get; set; }
-
-    [Parameter]
-    public int Delay { get; set; }
+    public string Title { get; set; }
 
     private string Color { get; set; } = null!;
 
@@ -37,7 +34,7 @@
         Color = ThrowResult.Succeeded ? "var(--bs-green)" : "var(--bs-red)";
         Task.Run(async delegate
               {
-                  await Task.Delay(Delay);
+                  await Task.Delay(250);
                   ShouldShow = true;
                   StateHasChanged();
               });

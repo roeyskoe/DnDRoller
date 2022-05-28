@@ -14,7 +14,7 @@ public class Group
     public Group()
     {
         Attacks = new List<Attack>();
-        Attacks.Add(new DirectAttack(Dice.d4, 1, 0, 10));
+        Attacks.Add(new DirectAttack(Dice.d4, 1, 0, 1, "Hit"));
         Monster m = new Monster();
         m.Attacks = Attacks;
         Monsters.Add(m);

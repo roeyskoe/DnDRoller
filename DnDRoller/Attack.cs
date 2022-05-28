@@ -7,6 +7,7 @@ public abstract class Attack
     public Dice Dice { get; set; }
     public int NDice { get; set; }
     public int Plus { get; set; }
+    public string Name { get; set; }
 
     public int Throw(bool crit)
     {

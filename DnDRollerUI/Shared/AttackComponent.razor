@@ -6,10 +6,12 @@
         {
             <option value="@d"> @d </option>
         }
-    </select> <span class="input-group-text">+</span>
+    </select>
+    <span class="input-group-text">+</span>
     <input id="dmg" name="DamagePlus" type="number" @bind="@Attack.Plus" class="col-md-2"/>
     @if (Attack is AOEAttack aoe)
     {
+        <span class="input-group-text">Save</span>
         <select @bind="@aoe.Save" class="custom-select">
             @foreach (var d in Enum.GetValues(typeof(Save)))
             {
@@ -18,14 +20,20 @@
         </select>
         <input id="saveLimit" name="SaveLimit" type="number" @bind="@aoe.SaveLimit" class="col-md-2"/>
     }
+    else if(Attack is DirectAttack dir)
+    {
+        <span class="input-group-text">Hit +</span>
+        <input id="toHitPlus" name="ToHitPlus" type="number" @bind="@dir.ToHitPlus" class="col-md-2"/>
+    }
     
-    <button type="button" class="btn btn-sm btn-outline-dark" aria-label="Attack" @onclick=DoAttack>Throw</button>
-
+    <input type="text" class="form-control" value="@Attack.Name" @oninput="args => { Attack.Name = (string) args.Value; Helper.Update(); }" placeholder="Name"/>
+    
+    <Button type="button" class="btn btn-secondary" @onclick="()=>AttackFunc(Attack)">Throw All</Button>
+    
     <span class="ms-auto">
         <button type="button" class="btn-close btn-sm" aria-label="Close" @onclick=DoRemove></button>
     </span>
 </span>
-
 
 @code {
 
@@ -37,12 +45,7 @@
 
     [Parameter]
     public Action<AttackComponent> RemoveFunc { get; set; }
-
-    private void DoAttack()
-    {
-        AttackFunc(Attack);
-    }
-
+    
     private void DoRemove()
     {
         RemoveFunc(this);
