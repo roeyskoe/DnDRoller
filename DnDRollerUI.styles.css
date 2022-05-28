@@ -80,3 +80,25 @@ main[b-8rhrd9lyqj] {
         padding-right: 1.5rem !important;
     }
 }
+/* /Shared/MonsterComponent.razor.rz.scp.css */
+@keyframes progress-b-l6wv0hb9i5 {
+    0% {
+        background-color: red;
+    }
+
+    32.5% {
+        background-color: orange;
+    }
+
+    50% {
+        background-color: yellow;
+    }
+
+    100% {
+        background-color: lime;
+    }
+}
+
+.progress[b-l6wv0hb9i5] {
+    animation: 100s ease-in-out calc(-1s * var(--progress)) paused progress-b-l6wv0hb9i5;
+}
