@@ -65,7 +65,11 @@
         get => Group.Monsters.Count;
         set
         {
-            if (N > value) Group.Monsters.RemoveAt(Group.Monsters.Count - 1);
+            if (N > value)
+            { // TODO: This need to be done better
+                Group.Monsters.RemoveAt(Group.Monsters.Count - 1);
+                MonsterComponents.RemoveAt(MonsterComponents.Count - 1);
+            }
             if (N < value) Group.Monsters.Add(new Monster() {Attacks = Group.Attacks});
         }
     }
@@ -93,6 +97,7 @@
         {
             monsterComponent.Throw(at);
             Total += monsterComponent.Result.Damage;
+            Console.WriteLine(MonsterComponents.Count);
             StateHasChanged();
         }
     }
