@@ -88,9 +88,12 @@
 
     public void Throw(Attack at)
     {
+        Total = 0;
         foreach (var monsterComponent in MonsterComponents)
         {
             monsterComponent.Throw(at);
+            Total += monsterComponent.Result.Damage;
+            StateHasChanged();
         }
     }
 
