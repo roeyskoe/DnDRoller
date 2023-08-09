@@ -5,13 +5,12 @@
                 <span class="input-group mb-3">
                     <span class="input-group-text">Enemy AC:</span>
                     <input id="ac" name="AC" type="number" @bind="@AC" class="col-md-2 input-lg" min=1/>
+                </span>
+                <span class="input-group mb-3">
                     <span class="input-group-text">Count:</span>
-                    <input id="count" name="Count" type="number" @bind="@N" class="col-md-2 input-lg" min=1/>
+                    <input id="count" name="Count" type="number" @bind="@N" class="col-md-2 input-lg" min=1 />
                     <span class="input-group-text">Max HP:</span>
-                    <input id="maxHp" name="MaxHP" type="number" @bind="@MaxHp" class="col-md-2 input-lg" min=1/>
-                    <span class="ms-auto">
-                        <button type="button" class="btn-close" aria-label="Close" @onclick=Close></button>
-                    </span>
+                    <input id="maxHp" name="MaxHP" type="number" @bind="@MaxHp" class="col-md-2 input-lg" min=1 />
                 </span>
             </div>
         </div>
@@ -20,7 +19,9 @@
                 <div class="d-flex flex-wrap">
                     @foreach (var a in Group.Attacks)
                     {
+                        <div class="card bg-light mb-3">
                         <AttackComponent Attack=@a AttackFunc=Throw RemoveFunc=RemoveAttack></AttackComponent>
+                        </div>
                     }
                 </div>
                 <div class="dropdown">

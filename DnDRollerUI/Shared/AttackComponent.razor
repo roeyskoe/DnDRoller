@@ -9,6 +9,8 @@
     </select>
     <span class="input-group-text">+</span>
     <input id="dmg" name="DamagePlus" type="number" @bind="@Attack.Plus" class="col-md-2"/>
+</span>
+<span class="input-group mb-3">
     @if (Attack is AOEAttack aoe)
     {
         <span class="input-group-text">Save</span>
@@ -25,7 +27,9 @@
         <span class="input-group-text">Hit +</span>
         <input id="toHitPlus" name="ToHitPlus" type="number" @bind="@dir.ToHitPlus" class="col-md-2"/>
     }
-    
+</span>
+<span class="input-group mb-3">
+
     <input type="text" class="form-control" value="@Attack.Name" @oninput="args => { Attack.Name = (string) args.Value; Helper.Update(); }" placeholder="Name"/>
     
     <Button type="button" class="btn btn-secondary" @onclick="()=>AttackFunc(Attack)">Throw All</Button>
